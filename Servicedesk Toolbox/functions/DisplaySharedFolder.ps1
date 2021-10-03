@@ -21,10 +21,12 @@ function displaySharedFolder {
         return
     }
 
+    $outputBox.AppendText("Folder: " + $inputBox.Text + "`r`n")
+
     #Display access righs, and try to fetch AD group for each right
     $foundGroup = $false
     $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
-    $outputBox.AppendText("The following groups have access to the folder:`r`n")
+    $outputBox.AppendText("`r`nThe following groups have access to the folder:`r`n")
 
     foreach($access in $accessRights){
         $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
