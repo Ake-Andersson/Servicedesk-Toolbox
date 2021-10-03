@@ -46,6 +46,7 @@ $outputBox.location              = New-Object System.Drawing.Point(0,50)
 $outputBox.BackColor             = 'WhiteSmoke'
 $outputBox.Scrollbars            = "Vertical"
 $outputBox.ReadOnly              = $true 
+$outputBox.DetectUrls            = $false
 
 $Button1                         = New-Object system.Windows.Forms.Button
 $Button1.text                    = ""
