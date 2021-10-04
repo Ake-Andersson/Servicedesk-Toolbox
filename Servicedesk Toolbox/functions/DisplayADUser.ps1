@@ -15,13 +15,19 @@
 
     #Display info for User
     foreach($line in $userCFG){
-        $attribute = $line.Substring($line.IndexOf('{')+1, $line.Length-$line.IndexOf('{')-2)
-        $friendlyName = $line.Substring(0, $line.IndexOf('{'))
+        if($line -like "*{*}" -and $line.Length -ge 4){
+            Write-Host $line
+            $attribute = $line.Substring($line.IndexOf('{')+1, $line.Length-$line.IndexOf('{')-2)
+            $friendlyName = $line.Substring(0, $line.IndexOf('{'))
+            $displayAttribute = $user."$attribute"
 
-        $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
-        $outputBox.AppendText($friendlyName)
-        $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
-        $outputBox.AppendText($user."$attribute".toString() + "`r`n")
+            if($displayAttribute -ne $null){
+                $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
+                $outputBox.AppendText($friendlyName)
+                $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
+                $outputBox.AppendText($displayAttribute.toString() + "`r`n")
+            }
+        }        
     }
 
     $outputBox.AppendText("`r`n")

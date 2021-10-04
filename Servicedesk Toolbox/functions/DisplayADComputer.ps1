@@ -18,13 +18,18 @@
 
     #Display info for computer
     foreach($line in $computerCFG){
-        $attribute = $line.Substring($line.IndexOf('{')+1, $line.Length-$line.IndexOf('{')-2)
-        $friendlyName = $line.Substring(0, $line.IndexOf('{'))
+        if($line -like "*{*}" -and $line.Length -ge 4){
+            $attribute = $line.Substring($line.IndexOf('{')+1, $line.Length-$line.IndexOf('{')-2)
+            $friendlyName = $line.Substring(0, $line.IndexOf('{'))
+            $displayAttribute = $computer."$attribute"
 
-        $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
-        $outputBox.AppendText($friendlyName)
-        $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
-        $outputBox.AppendText($computer."$attribute".toString() + "`r`n")
+            if($displayAttribute -ne $null){
+                $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
+                $outputBox.AppendText($friendlyName)
+                $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
+                $outputBox.AppendText($displayAttribute.toString() + "`r`n")
+            }
+        }
     }
 
     if($user -ne $null){
