@@ -5,8 +5,9 @@ This project aims to be a completely portable and easily customizable tool for I
 The user may search for e.g Active Directory users, computers or folders.
 The script will then display easily customizable information for the result, and change the buttons to provide relevant tools and functions.
 
+The script supports displaying information from Exchange. To configure this, set to enabled and to your Exchange server URI in "\Servicedesk Toolbox\configs\Exchange_config.txt"
 
-The script supports displaying any information from Active Directory and is fully customizable by editing the template files in the folder "\Servicedesk Toolbox\templates\" through the format: "Friendly Name {AD Attribute}"
+The script supports displaying any information from Active Directory and is fully customizable by editing the template files in the folder "\Servicedesk Toolbox\configs\" through the format: "Friendly Name {AD Attribute}"
 
 For example adding the line "Phone Number: {telephoneNumber}" to "\Servicedesk Toolbox\templates\AD_user_templates.txt":
 Will display a users telephone number from Active Directory as "Phone Number: XXXXXXXXXX" when the script searches for a user.
@@ -22,6 +23,7 @@ Feel free to use, edit, copy or take inspiration from this script in any way you
 To install, simply copy the the entire folder to a relevant server in an Active Directory environment, and start through the shortcut (Servicedesk Toolbox)
 
 
-![User](https://user-images.githubusercontent.com/91835664/135761939-d5771494-e8a0-4674-85c1-773ae3e584ee.PNG)
-![Computer](https://user-images.githubusercontent.com/91835664/135762523-cac4e021-e5c0-469c-bb17-6f3a4ba06c53.PNG)
-![Shared Folder](https://user-images.githubusercontent.com/91835664/135763001-0704bf85-3a24-472a-b50a-bb30412c7114.PNG)
+![User](https://user-images.githubusercontent.com/91835664/136247783-60b4af11-bcc5-4c59-8290-6b6c3e137003.png)
+![Mailbox](https://user-images.githubusercontent.com/91835664/136247812-33d66ab6-7067-42fd-aeb2-8aee78c61b25.png)
+![Computer](https://user-images.githubusercontent.com/91835664/136247818-78aa548f-3c9a-4f0b-a35c-a90dd9aa9f2e.png)
+![Shared Folder](https://user-images.githubusercontent.com/91835664/136247828-e94b386b-dc61-4f1d-985c-e4444762532d.png)
