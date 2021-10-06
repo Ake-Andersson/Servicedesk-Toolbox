@@ -1,8 +1,10 @@
-﻿. "$PSScriptRoot\functions\DetermineFunction.ps1"
+﻿#Import other files and functions
 . "$PSScriptRoot\gui\ToolboxFrame.ps1"
+. "$PSScriptRoot\functions\DetermineFunction.ps1"
 . "$PSScriptRoot\functions\DisplayADUser.ps1"
 . "$PSScriptRoot\functions\DisplayADComputer.ps1"
 . "$PSScriptRoot\functions\DisplaySharedFolder.ps1"
+. "$PSScriptRoot\functions\DisplayMailbox.ps1"
 
 Import-Module ActiveDirectory
 
@@ -11,7 +13,7 @@ function buttonClick {
   param(
     $button
   )
-
+  
   $selectedItem = $computerBox.SelectedItem
 
   switch($button.Tag){
@@ -147,8 +149,21 @@ function buttonClick {
         $error.Clear()
     }
 
+    #Add Full Access Permission (imported from .\functions\DisplayMailbox.ps1)
+    "Add Full Access Permission" {addFullAccessPermission}
+
+    #Remove Full Access Permission (imported from .\functions\DisplayMailbox.ps1)
+    "Remove Full Access Permission" {removeFullAccessPermission}
+
+    #Add an autoreply for a mailbox (imported from .\functions\DisplayMailbox.ps1)
+    "Set Autoreply" {setAutoReply}
+
+    #Show or remove autoreply for mailbox (imported from .\functions\DisplayMailbox.ps1)
+    "Show or Remove Autoreply" {showAutoReply}
+
   }
 }
+
 
 $inputBox.Add_KeyDown({
     #To enable Enter-press to Find
@@ -194,5 +209,14 @@ $Button6.Add_Click({
 })
 
 
+if($exchangeEnabled){
+    $session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri $exchangeUri -Authentication Kerberos
+    Import-PSSession $session
+}
 
 $Form.ShowDialog()
+
+
+if($exchangeEnabled){
+    Remove-PSSession $session
+}

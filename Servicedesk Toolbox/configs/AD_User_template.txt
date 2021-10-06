@@ -1,0 +1,6 @@
+Full Name: {displayName}
+Phone Number: {telephoneNumber}
+E-mail: {mail}
+Location: {l}
+Department: {department}
+Job Title: {title}

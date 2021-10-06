@@ -11,12 +11,11 @@
 
     #get Config
     $parentDir = (Get-Item $PSScriptRoot).parent.FullName
-    $userCFG = Get-Content "$parentDir\templates\AD_User_template.txt"
+    $userCFG = Get-Content "$parentDir\configs\AD_User_template.txt"
 
     #Display info for User
     foreach($line in $userCFG){
         if($line -like "*{*}" -and $line.Length -ge 4){
-            Write-Host $line
             $attribute = $line.Substring($line.IndexOf('{')+1, $line.Length-$line.IndexOf('{')-2)
             $friendlyName = $line.Substring(0, $line.IndexOf('{'))
             $displayAttribute = $user."$attribute"
@@ -112,25 +111,6 @@
     $Button5.Tag = "Set Expiration Date"
     $Button5.Enabled = $true
     $Button5.Text = "Set Expiration Date"
-
-
-
-    <#
-    if($usersComputers.Length -gt 0){
-        $outputBox.AppendText("`r`nPinging computers...`r`n")
-        foreach($computer in $usersComputers){
-            $ping = Test-Connection -ComputerName $computer -Quiet -Count 1
-            if($ping){
-                $outputBox.AppendText("✔ - " + $computer + " is active `r`n")
-            }else{
-                $outputBox.AppendText("✕ - " + $computer + " is NOT active `r`n")
-            }
-        }
-        
-        
-    }
-    #>
-    
 
   }catch{
     $outputBox.AppendText("`r`n" + $error + "`r`n")

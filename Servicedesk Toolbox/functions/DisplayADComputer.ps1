@@ -14,7 +14,7 @@
 
     #get Config
     $parentDir = (Get-Item $PSScriptRoot).parent.FullName
-    $computerCFG = Get-Content "$parentDir\templates\AD_Computer_template.txt"
+    $computerCFG = Get-Content "$parentDir\configs\AD_Computer_template.txt"
 
     #Display info for computer
     foreach($line in $computerCFG){

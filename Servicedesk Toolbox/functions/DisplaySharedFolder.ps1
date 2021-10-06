@@ -7,7 +7,7 @@ function displaySharedFolder {
     $path = $inputBox.Text
     $directUsers = @()
     
-    #Try to fetch access rights to groupå
+    #Try to fetch access rights to group
     try{
         $accessRights = (Get-ACL $path).access | select IdentityReference,FileSystemRights,AccessControlType,IsInherited,InheritanceFlags
     }catch{

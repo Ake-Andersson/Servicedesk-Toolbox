@@ -40,6 +40,10 @@
     displayADComputer
   } elseif($objectBox.Text -eq "Shared Folder"){
     displaySharedFolder
+  } elseif($objectBox.Text -eq "Mailbox"){
+    displayMailbox
+  } else{
+    $outputBox.AppendText("Something went wrong! Couldn't match search to a function..")
   }
 
   #Change buttons according to their tags
