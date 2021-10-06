@@ -2,7 +2,7 @@
 
 This project aims to be a completely portable and easily customizable tool for IT Servicedesk staff.
 
-The user may search for e.g Active Directory users, computers or folders.
+The user may search for e.g Active Directory users/computers, Exchange mailboxes or shared folders.
 The script will then display easily customizable information for the result, and change the buttons to provide relevant tools and functions.
 
 The script supports displaying information from Exchange. To configure this, set to enabled and to your Exchange server URI in "\Servicedesk Toolbox\configs\Exchange_config.txt"
