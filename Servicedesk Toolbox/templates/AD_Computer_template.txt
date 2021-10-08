@@ -1,5 +1,0 @@
-Computer Name: {cn}
-Enabled: {enabled}
-Last Logon: {lastLogonDate}
-Operating System: {operatingSystem}
-Version: {operatingSystemVersion}
