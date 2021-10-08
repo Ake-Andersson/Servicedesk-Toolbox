@@ -42,7 +42,7 @@ function displaySharedFolder {
         }
 
         if(!$error){
-            #accessright IS an AD group, so fetch members
+            #accessright IS an AD group, so fetch members if the group is not inherited
             if($group.name -ne "Administrators"){
                 $computerBox.Items.Add($group.name)
                 $foundGroup = $true
@@ -52,23 +52,24 @@ function displaySharedFolder {
             $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Bold)
             $outputBox.AppendText("(" + $access.FileSystemRights.toString() + ") ")
             if($access.isInherited.toString() -eq "True"){
-                $outputBox.AppendText("[Inherited]) - " + $access.IdentityReference.toString() + ":`r`n")
+                $outputBox.AppendText("[Inherited]) - " + $access.IdentityReference.toString() + "`r`n")
             }else{
                 $outputBox.AppendText("[Not Inherited] - " + $access.IdentityReference.toString() + ":`r`n")
-            }
-
-            try{
-                $members = Get-ADGroupMember -Identity $group -Recursive | Get-ADUser | select sAMAccountName
-            }catch{
-                $outputBox.AppendText("Failed getting members of " + $group + ":`r`n" + $error + "`r`n")
-            }
-
-            #display members
-            if(!$error){
-                foreach($member in $members){
-                    $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
-                    $outputBox.AppendText($member.sAMAccountName + "`r`n")
+            
+                try{
+                    $members = Get-ADGroupMember -Identity $group -Recursive | Get-ADUser | select sAMAccountName
+                }catch{
+                    $outputBox.AppendText("Failed getting members of " + $group + ":`r`n" + $error + "`r`n")
                 }
+
+                #display members for non inherited group
+                if(!$error){
+                    foreach($member in $members){
+                        $outputBox.SelectionFont = New-Object System.Drawing.Font("Arial",8,[System.Drawing.FontStyle]::Regular)
+                        $outputBox.AppendText($member.sAMAccountName + "`r`n")
+                    }
+                }
+            
             }
 
         }

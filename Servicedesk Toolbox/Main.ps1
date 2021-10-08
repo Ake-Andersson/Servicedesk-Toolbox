@@ -36,29 +36,36 @@ function buttonClick {
     #Change the password of searched user
     "Change Password" {
         $password = [Microsoft.VisualBasic.Interaction]::InputBox("Please input the desired password.", "Enter new password")
-        try{
-            Set-ADAccountPassword -Identity $inputBox.Text -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)
-        }catch{
-            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+        if($password.Length -gt 0){
+            try{
+                Set-ADAccountPassword -Identity $inputBox.Text -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)
+            }catch{
+                [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            }
+
+            if(!$error){
+                [System.Windows.Forms.MessageBox]::Show("Password successfully changed!" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+            }
+
+            $error.clear()
         }
-        if(!$error){
-            [System.Windows.Forms.MessageBox]::Show("Password successfully changed!" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
-        }
-        $error.clear()
     }
 
     #Set expiration date of searched user
     "Set Expiration Date" {
         $expirationDate = [Microsoft.VisualBasic.Interaction]::InputBox("Please input the desired expiration date. (ex 2021-01-01).", "Enter expiration date")
-        try{
-            Set-ADAccountExpiration -Identity $inputBox.Text -DateTime "$expirationDate"
-        }catch{
-            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+        if($expirationDate.Length -gt 0){
+            try{
+                Set-ADAccountExpiration -Identity $inputBox.Text -DateTime "$expirationDate"
+            }catch{
+                [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            }
+            if(!$error){
+                [System.Windows.Forms.MessageBox]::Show("Expiration date successfully set!" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+            }
+
+            $error.clear()
         }
-        if(!$error){
-            [System.Windows.Forms.MessageBox]::Show("Expiration date successfully set!" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
-        }
-        $error.clear()
     }
 
     #Enable the searched user
@@ -119,34 +126,38 @@ function buttonClick {
     "Add AD group member" {
         $grp = $computerBox.SelectedItem
         $grpMember = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter a username to add to $grp", "Enter Username")
-        try{
-            Add-ADGroupMember -Identity $grp -Members $grpMember
-        }catch{
-            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
-        }
+        if($grpMember.Length -gt 0){
+            try{
+                Add-ADGroupMember -Identity $grp -Members $grpMember
+            }catch{
+                [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            }
 
-        if(!$error){
-            [System.Windows.Forms.MessageBox]::Show("$grpMember has been added to $grp" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
-        }
+            if(!$error){
+                [System.Windows.Forms.MessageBox]::Show("$grpMember has been added to $grp" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+            }
 
-        $error.Clear()
+            $error.Clear()
+        }
     }
 
     #Remove AD Group Member
     "Remove AD group member" {
         $grp = $computerBox.SelectedItem
         $grpMember = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter a username to remove from $grp", "Enter Username")
-        try{
-            Remove-ADGroupMember -Identity $grp -Members $grpMember -Confirm:$false
-        }catch{
-            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
-        }
+        if($grpMember.Length -gt 0){
+            try{
+                Remove-ADGroupMember -Identity $grp -Members $grpMember -Confirm:$false
+            }catch{
+                [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            }
 
-        if(!$error){
-            [System.Windows.Forms.MessageBox]::Show("$grpMember has been removed from $grp" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
-        }
+            if(!$error){
+                [System.Windows.Forms.MessageBox]::Show("$grpMember has been removed from $grp" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+            }
 
-        $error.Clear()
+            $error.Clear()
+        }
     }
 
     #Add Full Access Permission (imported from .\functions\DisplayMailbox.ps1)

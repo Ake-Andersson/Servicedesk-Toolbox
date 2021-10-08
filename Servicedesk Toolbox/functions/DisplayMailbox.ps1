@@ -102,16 +102,18 @@
 function addFullAccessPermission{
     $userName = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the username of the user you wish to add.", "Enter username")
 
-    try{
-        Add-MailboxPermission -identity $computerBox.SelectedItem -accessrights:fullaccess -user $userName
-    }catch{
-        [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
-        $error.Clear()
-        return
-    }
+    if($userName.Length -gt 0){
+        try{
+            Add-MailboxPermission -identity $computerBox.SelectedItem -accessrights:fullaccess -user $userName
+        }catch{
+            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            $error.Clear()
+            return
+        }
 
-    if(!$error){
-        [System.Windows.Forms.MessageBox]::Show("$userName has been added to the mailbox Full Access Permissions" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+        if(!$error){
+            [System.Windows.Forms.MessageBox]::Show("$userName has been added to the mailbox Full Access Permissions" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+        }
     }
 
     $error.clear()
@@ -122,19 +124,22 @@ function addFullAccessPermission{
 function removeFullAccessPermission{
     $userName = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the username of the user you wish to add.", "Enter username")
     
-    try{
-        Remove-MailboxPermission -identity $computerBox.SelectedItem -accessrights:fullaccess -user $userName -confirm:$false
-    }catch{
-        [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
-        $error.Clear()
-        return
+    if($userName.Length -gt  0){
+        try{
+            Remove-MailboxPermission -identity $computerBox.SelectedItem -accessrights:fullaccess -user $userName -confirm:$false
+        }catch{
+            [System.Windows.Forms.MessageBox]::Show($error , "Error" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Error)
+            $error.Clear()
+            return
+        }
+
+        if(!$error){
+            [System.Windows.Forms.MessageBox]::Show("$userName has been removed to the mailbox Full Access Permissions" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
+        }
+
+        $error.clear()
     }
 
-    if(!$error){
-        [System.Windows.Forms.MessageBox]::Show("$userName has been removed to the mailbox Full Access Permissions" , "Done!" , [System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Information)
-    }
-
-    $error.clear()
 }
 
 

@@ -1,2 +1,2 @@
-Enable Exchange=True
+Enable Exchange=False
 Exchange Powershell-Uri=http://LabSRV01/PowerShell/
